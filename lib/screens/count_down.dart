@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:countdown_timer/services/notification_api.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -12,7 +13,7 @@ class CountDown extends StatefulWidget {
   State<CountDown> createState() => _CountDownState();
 }
 
-class _CountDownState extends State<CountDown> {
+class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
   int? seconds1;
   int? seconds2;
   int? minutes1;
@@ -33,6 +34,67 @@ class _CountDownState extends State<CountDown> {
   IconData timerIcon = Icons.pause;
 
   bool percentIndicator = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+    NotificationApi.init();
+    listenNotifications();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
+
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch(state){
+      case AppLifecycleState.resumed:
+        NotificationApi.cancelAllNotification();
+        break;
+      case AppLifecycleState.inactive:
+        NotificationApi.showScheduledNotification(
+          title: 'Timer end',
+          body: 'ok?',
+          payload: 'osama',
+          scheduledDate: DateTime.now().add(Duration(seconds: totalSeconds)),
+        );
+        break;
+      case AppLifecycleState.paused:
+        NotificationApi.showScheduledNotification(
+          title: 'Timer end',
+          body: 'ok?',
+          payload: 'osama',
+          scheduledDate: DateTime.now().add(Duration(seconds: totalSeconds)),
+        );
+        break;
+      case AppLifecycleState.detached:
+        NotificationApi.showScheduledNotification(
+          title: 'Timer end',
+          body: 'ok?',
+          payload: 'osama',
+          scheduledDate: DateTime.now().add(Duration(seconds: totalSeconds)),
+        );
+        break;
+    }
+  }
+
+  void listenNotifications() {
+    NotificationApi.onNotifications.stream.listen(onClickedNotification);
+  }
+
+  void onClickedNotification(String? payload) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const CountDown()));
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
