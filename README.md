@@ -1,4 +1,4 @@
 # Timer App
 
-Countdown timer and stopwatch.
+Countdown timer and stopwatch. (Flutter)
 
