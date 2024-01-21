@@ -6,10 +6,10 @@ class StopWatch extends StatefulWidget {
   const StopWatch({Key? key}) : super(key: key);
 
   @override
-  _StopWatchState createState() => _StopWatchState();
+  StopWatchState createState() => StopWatchState();
 }
 
-class _StopWatchState extends State<StopWatch> {
+class StopWatchState extends State<StopWatch> {
   Stopwatch stopwatch = Stopwatch();
 
   Timer? timer;
@@ -26,10 +26,7 @@ class _StopWatchState extends State<StopWatch> {
 
   @override
   Widget build(BuildContext context) {
-    String time = stopwatch.elapsed
-        .toString()
-        .replaceRange(0, 2, '')
-        .replaceRange(7, 11, '');
+    String time = stopwatch.elapsed.toString().replaceRange(0, 2, '').replaceRange(7, 11, '');
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.center,
@@ -40,11 +37,12 @@ class _StopWatchState extends State<StopWatch> {
               height: MediaQuery.of(context).size.width * 0.5,
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  shape: BoxShape.circle),
+                border: Border.all(
+                  width: 2,
+                  color: Theme.of(context).primaryColor,
+                ),
+                shape: BoxShape.circle,
+              ),
             ),
           ),
           Center(
@@ -59,6 +57,7 @@ class _StopWatchState extends State<StopWatch> {
             ),
           ),
           Positioned(
+            bottom: 32.0,
             child: InkWell(
               onTap: () {
                 if (stopwatch.isRunning) {
@@ -69,8 +68,7 @@ class _StopWatchState extends State<StopWatch> {
                   });
                 } else {
                   stopwatch.start();
-                  timer =
-                      Timer.periodic(const Duration(milliseconds: 30), (timer) {
+                  timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
                     setState(() {
                       time = stopwatch.elapsed.toString();
                     });
@@ -82,17 +80,18 @@ class _StopWatchState extends State<StopWatch> {
               },
               child: CircleAvatar(
                 backgroundColor: Theme.of(context).primaryColor,
+                radius: 30.0,
                 child: Icon(
                   icon,
                   size: 30,
                   color: Colors.grey,
                 ),
-                radius: 30.0,
               ),
             ),
-            bottom: 32.0,
           ),
           Positioned(
+            left: 32.0,
+            bottom: 32.0,
             child: TextButton(
               child: Text(
                 "RESET",
@@ -106,14 +105,11 @@ class _StopWatchState extends State<StopWatch> {
                 stopwatch.stop();
                 stopwatch.reset();
                 timer!.cancel();
-
                 setState(() {
                   time = stopwatch.elapsed.toString();
                 });
               },
             ),
-            left: 32.0,
-            bottom: 32.0,
           ),
         ],
       ),

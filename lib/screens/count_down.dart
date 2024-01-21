@@ -38,7 +38,7 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     NotificationApi.init();
     listenNotifications();
   }
@@ -46,14 +46,13 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance!.removeObserver(this);
-
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    switch(state){
+    switch (state) {
       case AppLifecycleState.resumed:
         NotificationApi.cancelAllNotification();
         break;
@@ -81,6 +80,9 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
           scheduledDate: DateTime.now().add(Duration(seconds: totalSeconds)),
         );
         break;
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
+        break;
     }
   }
 
@@ -89,12 +91,8 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
   }
 
   void onClickedNotification(String? payload) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const CountDown()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CountDown()));
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +254,7 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
                                 ? DateFormat('HH:mm:ss').format(datetime!)
                                 : "${datetime!.day - 1} day ${DateFormat('HH:mm:ss').format(datetime!)}",
                             style: const TextStyle(
-                              fontSize: 64,
+                              fontSize: 64.0,
                             ),
                           ),
                         ),
@@ -353,11 +351,11 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
                 },
                 child: CircleAvatar(
                   backgroundColor: Theme.of(context).primaryColor,
+                  radius: 30,
                   child: const Icon(
                     Icons.play_arrow,
                     size: 30,
                   ),
-                  radius: 30,
                 ),
               )
             else
@@ -386,16 +384,14 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
                     },
                     child: CircleAvatar(
                       backgroundColor: Theme.of(context).primaryColor,
+                      radius: 30,
                       child: Icon(
                         timerIcon,
                         size: 30,
                       ),
-                      radius: 30,
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20.0),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -406,11 +402,11 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
                     },
                     child: CircleAvatar(
                       backgroundColor: Theme.of(context).primaryColor,
+                      radius: 30.0,
                       child: const Icon(
                         Icons.stop,
-                        size: 30,
+                        size: 30.0,
                       ),
-                      radius: 30,
                     ),
                   ),
                 ],
@@ -425,8 +421,8 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
     return Timer.periodic(const Duration(seconds: 1), (timer) {
       totalSeconds--;
       if (totalSeconds < 0) {
-        final AudioCache player = AudioCache();
-        player.play('timer_end.mp3');
+        final AudioPlayer player = AudioPlayer();
+        player.play(AssetSource('timer_end.mp3'));
         timer.cancel();
         resetTimer();
         return;
@@ -518,7 +514,10 @@ class _CountDownState extends State<CountDown> with WidgetsBindingObserver {
         child: Center(
           child: Text(
             index.toString(),
-            style: const TextStyle(color: Colors.grey, fontSize: 64),
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 64.0,
+            ),
           ),
         ),
       ),

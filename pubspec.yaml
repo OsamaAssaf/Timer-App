@@ -12,31 +12,26 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-  cupertino_icons: ^1.0.4
-  intl: ^0.17.0
-  percent_indicator: ^3.4.0
-  audioplayers: ^0.20.1
+  cupertino_icons: ^1.0.6
+  intl: ^0.19.0
+  percent_indicator: ^4.2.3
+  audioplayers: ^5.2.1
   flutter_local_notifications: ^9.2.0
   flutter_native_timezone: ^2.0.0
-  rxdart: ^0.27.3
-
-
+  rxdart: ^0.27.7
+  timezone: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-  flutter_lints: ^1.0.0
-  flutter_launcher_icons: "^0.9.2"
-
+  flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/icon/icon.jpg"
-
 
 flutter:
 
@@ -44,38 +39,3 @@ flutter:
 
   assets:
     - assets/timer_end.mp3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

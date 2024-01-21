@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80),
+          preferredSize: const Size.fromHeight(80.0),
           child: AppBar(
             backgroundColor: Theme.of(context).canvasColor,
             elevation: 0.0,
@@ -27,8 +27,12 @@ class Home extends StatelessWidget {
                 ),
               ],
             ),
-            shape:
-                const Border(bottom: BorderSide(width: 2, color: Colors.grey)),
+            shape: const Border(
+              bottom: BorderSide(
+                width: 2,
+                color: Colors.grey,
+              ),
+            ),
           ),
         ),
         body: const TabBarView(

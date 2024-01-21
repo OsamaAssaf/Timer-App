@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.countdown_timer">
+    package="com.assaf.countdown_timer">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <application
